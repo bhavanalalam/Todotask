@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Todo list</title>
+</head>
+<body>
+  <h2>TODO TASKS</h2>
+  
+  <form id="todoform">
+    <label for="todoDesc">Todo Desc</label>
+    <input type="text" id="todoDesc" required><br><br>
+    
+    <label for="targetDateTime">Target Date & Time</label>
+    <input type="datetime-local" id="targetDateTime" required><br><br>
+    
+    <label for="status">Status</label>
+    <select id="status" disabled>
+      <option value="Pending" selected>Pending</option>
+      <option value="Completed">Completed</option>
+    </select><br><br>
+    
+    <button type="submit">Submit</button>
+  </form>
+
+  <h2>Task list</h2>
+  <table border="1" id="taskTable">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Date</th>
+        <th>Todo Desc</th>
+        <th>Target Date & Time</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody id="tableBody">
+    </tbody>
+  </table>
+
+  <script>
+    var taskId = 1;
+   
+    function addTasks(id, desc, targetDatetime, status) {
+      var today = new Date();
+      var currentDate = today.toLocaleDateString('en-GB');
+
+      var tableBody = document.getElementById("tableBody");
+      var newRow = document.createElement("tr");
+
+      var idCell = document.createElement("td");
+      idCell.textContent = id;
+
+      var dateCell = document.createElement("td");
+      dateCell.textContent = currentDate;
+
+      var descCell = document.createElement("td");
+      descCell.textContent = desc;
+
+      var targetCell = document.createElement("td");
+      targetCell.textContent = targetDatetime;
+
+      var statusCell = document.createElement("td");
+      var select = document.createElement("select");
+
+      var option1 = document.createElement("option");
+      option1.value = "Pending";
+      option1.text = "Pending";
+
+      var option2 = document.createElement("option");
+      option2.value = "Completed";
+      option2.text = "Completed";
+
+      select.appendChild(option1);
+      select.appendChild(option2);
+      select.value = status;
+      statusCell.appendChild(select);
+      newRow.appendChild(idCell);
+      newRow.appendChild(dateCell);
+      newRow.appendChild(descCell);
+      newRow.appendChild(targetCell);
+      newRow.appendChild(statusCell);
+      tableBody.appendChild(newRow);
+    }
+
+    var form = document.getElementById("todoform");
+    form.addEventListener("submit", function(event) {
+      event.preventDefault();
+
+      var desc = document.getElementById("todoDesc").value;
+      var targetDateTime = document.getElementById("targetDateTime").value;
+      var status = "Pending";
+       
+      var targetDate = new Date(targetDateTime);
+      var now = new Date();
+      if (targetDate.getTime() <= now.getTime()) {
+    alert("Target date & time must be in the future ");
+    return;
+  }
+      addTasks(taskId, desc, targetDateTime, status);
+      taskId++;
+
+      document.getElementById("todoDesc").value = "";
+      document.getElementById("targetDateTime").value = "";
+    });
+  </script>
+</body>
+</html>
