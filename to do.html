@@ -15,11 +15,8 @@
     <input type="datetime-local" id="targetDateTime" required><br><br>
     
     <label for="status">Status</label>
-    <select id="status" disabled>
-      <option value="Pending" selected>Pending</option>
-      <option value="Completed">Completed</option>
-    </select><br><br>
-    
+    <input type="text" id="status" value="Pending" disabled><br><br>
+
     <button type="submit">Submit</button>
   </form>
 
@@ -32,6 +29,7 @@
         <th>Todo Desc</th>
         <th>Target Date & Time</th>
         <th>Status</th>
+        <th>Edit</th> 
       </tr>
     </thead>
     <tbody id="tableBody">
@@ -40,7 +38,7 @@
 
   <script>
     var taskId = 1;
-   
+
     function addTasks(id, desc, targetDatetime, status) {
       var today = new Date();
       var currentDate = today.toLocaleDateString('en-GB');
@@ -61,25 +59,33 @@
       targetCell.textContent = targetDatetime;
 
       var statusCell = document.createElement("td");
-      var select = document.createElement("select");
+      var statusText = document.createElement("span");
+      statusText.textContent = status;
+      statusCell.appendChild(statusText);
 
-      var option1 = document.createElement("option");
-      option1.value = "Pending";
-      option1.text = "Pending";
-
-      var option2 = document.createElement("option");
-      option2.value = "Completed";
-      option2.text = "Completed";
-
-      select.appendChild(option1);
-      select.appendChild(option2);
-      select.value = status;
-      statusCell.appendChild(select);
+      var buttonCell = document.createElement("td");
+      var inProgressBtn = document.createElement("button");
+      inProgressBtn.textContent = "In Progress";
+      inProgressBtn.addEventListener("click", function () {
+        statusText.textContent = "In Progress";
+          
+      });
+      buttonCell.appendChild(inProgressBtn);
+      var completedBtn =document.createElement("button");
+      completedBtn.textContent="Completed";
+      completedBtn.addEventListener("click",function(){
+          statusText.textContent = "Completed";
+         inProgressBtn.disabled = true;
+        completedBtn.disabled = true;
+      });
+      buttonCell.appendChild(completedBtn);
       newRow.appendChild(idCell);
       newRow.appendChild(dateCell);
       newRow.appendChild(descCell);
       newRow.appendChild(targetCell);
       newRow.appendChild(statusCell);
+      newRow.appendChild(buttonCell);
+
       tableBody.appendChild(newRow);
     }
 
@@ -89,14 +95,14 @@
 
       var desc = document.getElementById("todoDesc").value;
       var targetDateTime = document.getElementById("targetDateTime").value;
-      var status = "Pending";
-       
+      var status = document.getElementById("status").value;
       var targetDate = new Date(targetDateTime);
       var now = new Date();
       if (targetDate.getTime() <= now.getTime()) {
-    alert("Target date & time must be in the future ");
-    return;
-  }
+        alert("Target date & time must be in the future");
+        return;
+      }
+
       addTasks(taskId, desc, targetDateTime, status);
       taskId++;
 
@@ -106,3 +112,4 @@
   </script>
 </body>
 </html>
+
