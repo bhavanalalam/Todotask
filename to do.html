@@ -1,115 +1,145 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
-  <title>Todo list</title>
+  <title>To-Do List</title>
+  <style>
+    table, th, td {
+      border: 0px solid green;
+      border-collapse: collapse;
+      padding: 6px;
+    }
+  </style>
 </head>
 <body>
-  <h2>TODO TASKS</h2>
-  
-  <form id="todoform">
-    <label for="todoDesc">Todo Desc</label>
-    <input type="text" id="todoDesc" required><br><br>
-    
-    <label for="targetDateTime">Target Date & Time</label>
-    <input type="datetime-local" id="targetDateTime" required><br><br>
-    
-    <label for="status">Status</label>
-    <input type="text" id="status" value="Pending" disabled><br><br>
-
-    <button type="submit">Submit</button>
-  </form>
-
-  <h2>Task list</h2>
-  <table border="1" id="taskTable">
-    <thead>
+<form action="" method="Post">
+  <table>
+    <tr>
+        <td><label>Date:</label></td>
+        <td><input type="date" name="ListDate" id="date" ></td>
+    </tr>
+    <tr>
+        <td><label>ToDo: </label></td>
+        <td><input type="text" name="TodoTitle" id="todo"></td>
+    </tr>
+    <tr>
+        <td><label>Target Date & Time:</label></td>
+        <td><input type="datetime-local" name="TodoTargetdate" id="target"></td>
+    </tr>
+    <tr>
+        <td><label>Status: </label></td>
+        <td><input type="text" name="Todostatus" id="status" ></td>
+    </tr>
+    <tr>
+        <td></td>
+        <td><input type="submit"></input></td>
+    </tr>
+  </table>
+  <script>
+    console.log("TEST-1");
+    </script>
+  <table id="todoTable">
       <tr>
         <th>ID</th>
-        <th>Date</th>
-        <th>Todo Desc</th>
-        <th>Target Date & Time</th>
+        <th>ToDo Desc</th>
+        <th>Target Date</th>
         <th>Status</th>
-        <th>Edit</th> 
       </tr>
-    </thead>
-    <tbody id="tableBody">
+    <tbody>
     </tbody>
   </table>
-
+</form>
   <script>
-    var taskId = 1;
+    var todoList=[{
+                    todoId:100,
+                    todoDesc : "Read Page 6",
+                    targetDate : "2025-07-30 11:35",
+                    todoStatus : "PENDING",
+                    createDate : "2025-07-29 10:00"
+                },
+                {
+                    todoId:7,
+                    todoDesc : "Write a document",
+                    targetDate : "2025-07-30 12:40",
+                    todoStatus : "COMPLETE",
+                    createDate : "2025-07-29 10:00"
+                },
+                {
+                    todoId:3,
+                    todoDesc : "Prepare a Presentation",
+                    targetDate : "2025-07-30 1:40",
+                    todoStatus : "IN-PROGRESS",
+                    createDate : "2025-07-29 10:00"
+                }];
 
-    function addTasks(id, desc, targetDatetime, status) {
-      var today = new Date();
-      var currentDate = today.toLocaleDateString('en-GB');
+    function getMaxTodoId(max, value, index, array) {
+        return max.todoId > value.todoId ? max : value;
+    }
+    console.log("max Obj :"+todoList.reduce(getMaxTodoId));
+    var maxObj =todoList.reduce(getMaxTodoId);
+    console.log("max Id :"+maxObj.todoId);
 
-      var tableBody = document.getElementById("tableBody");
-      var newRow = document.createElement("tr");
+    var todoId = maxObj.todoId; 
+    console.log("TEST1");
+ 
 
-      var idCell = document.createElement("td");
-      idCell.textContent = id;
+    function testClick(){
+        console.log("button clicked");
 
-      var dateCell = document.createElement("td");
-      dateCell.textContent = currentDate;
-
-      var descCell = document.createElement("td");
-      descCell.textContent = desc;
-
-      var targetCell = document.createElement("td");
-      targetCell.textContent = targetDatetime;
-
-      var statusCell = document.createElement("td");
-      var statusText = document.createElement("span");
-      statusText.textContent = status;
-      statusCell.appendChild(statusText);
-
-      var buttonCell = document.createElement("td");
-      var inProgressBtn = document.createElement("button");
-      inProgressBtn.textContent = "In Progress";
-      inProgressBtn.addEventListener("click", function () {
-        statusText.textContent = "In Progress";
-          
-      });
-      buttonCell.appendChild(inProgressBtn);
-      var completedBtn =document.createElement("button");
-      completedBtn.textContent="Completed";
-      completedBtn.addEventListener("click",function(){
-          statusText.textContent = "Completed";
-         inProgressBtn.disabled = true;
-        completedBtn.disabled = true;
-      });
-      buttonCell.appendChild(completedBtn);
-      newRow.appendChild(idCell);
-      newRow.appendChild(dateCell);
-      newRow.appendChild(descCell);
-      newRow.appendChild(targetCell);
-      newRow.appendChild(statusCell);
-      newRow.appendChild(buttonCell);
-
-      tableBody.appendChild(newRow);
     }
 
-    var form = document.getElementById("todoform");
-    form.addEventListener("submit", function(event) {
-      event.preventDefault();
+    function renderListTable(value, index, array){
+        console.log(value.todoId+"\n"+value.todoDesc + "\n"+value.targetDate+"\n"+value.todoStatus+"\n"+value.createDate);
+        var newTodoTr = document.createElement("tr");
+        
+        var newTodoIdTd = document.createElement("td");
+        newTodoIdTd.innerText = value.todoId;
+        
+        var newTodoDescTd = document.createElement("td");
+        newTodoDescTd.innerText = value.todoDesc;
+        
+        var newTodoTargetDateTd = document.createElement("td");
+        newTodoTargetDateTd.innerText = value.targetDate;
+        
+        var newTodoStatusTd = document.createElement("td");
+        newTodoStatusTd.innerText = value.todoStatus;
 
-      var desc = document.getElementById("todoDesc").value;
-      var targetDateTime = document.getElementById("targetDateTime").value;
-      var status = document.getElementById("status").value;
-      var targetDate = new Date(targetDateTime);
-      var now = new Date();
-      if (targetDate.getTime() <= now.getTime()) {
-        alert("Target date & time must be in the future");
-        return;
-      }
+        newTodoTr.appendChild(newTodoIdTd);
+        newTodoTr.appendChild(newTodoDescTd);
+        newTodoTr.appendChild(newTodoTargetDateTd);
+        newTodoTr.appendChild(newTodoStatusTd);
 
-      addTasks(taskId, desc, targetDateTime, status);
-      taskId++;
+        var todoTable = document.getElementById("todoTable");
+        todoTable.appendChild(newTodoTr);
+    }
 
-      document.getElementById("todoDesc").value = "";
-      document.getElementById("targetDateTime").value = "";
-    });
+    function renderTodoItems(todoList){
+        todoList.map(renderListTable);
+    }
+    renderTodoItems(todoList);
+
+    function addNewTodo(todoDesc, targetDate, todoStatus) {
+        todoDesc = document.getElementById("todo").value;
+        targetDate = document.getElementById("target").value;
+        todoStatus = document.getElementById("status").value;
+        todoId++;
+        console.log(todoId+"\n"+todoDesc + "\n"+targetDate+"\n"+todoStatus);
+        
+        
+        var todo={};
+        todo.todoId     =todoId;
+        todo.todoDesc   =todoDesc;
+        todo.targetDate = targetDate;
+        todo.todoStatus = todoStatus;
+        todo.createDate = new Date();
+        todoList.push(todo);
+        renderTodoItems(todoList);
+
+        console.log(todoList);
+
+    }
+    
   </script>
 </body>
 </html>
+
 
