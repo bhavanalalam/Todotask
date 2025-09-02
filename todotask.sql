@@ -7,12 +7,11 @@ CREATE TABLE todo_status (
   todo_status_desc VARCHAR(50),
   PRIMARY KEY (todo_status_id)  
 );
-
 CREATE TABLE todo_items (
   id INT NOT NULL,
   todo_title VARCHAR(30) NOT NULL,
   todo_desc VARCHAR(100),
-  todo_datatime DATETIME NOT NULL,
+  todo_datetime DATETIME NOT NULL,
   todo_status INT
 );
 
@@ -36,15 +35,12 @@ ALTER TABLE todo_status
   ADD modified_by VARCHAR(30) DEFAULT NULL,
   ADD modified_date DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP;
 
-/* 
-ALTER TABLE todo_items
-  DROP FOREIGN KEY fk_todo_status;
-
-ALTER TABLE todo_items
-  MODIFY todo_status ENUM('PENDING','IN-PROGRESS','COMPLETED') NOT NULL DEFAULT 'PENDING';
-*/
+/*ALTER TABLE todo_items
+  MODIFY todo_status ENUM('PENDING','IN-PROGRESS','COMPLETED') NOT NULL DEFAULT 'PENDING';*/
 
 SELECT * FROM todo_items;
+
+
 SHOW TABLES;
 
 
