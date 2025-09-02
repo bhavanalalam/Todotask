@@ -5,7 +5,7 @@ public class Todo {
     private String todoTitle;
     private String todoDesc;
     private String todoDateTime;
-    private String todoStatus;  // ENUM: PENDING, IN-PROGRESS, COMPLETED
+    private String todoStatus;  
 
     public Todo() {}
 
@@ -24,18 +24,39 @@ public class Todo {
         this.todoStatus = todoStatus;
     }
 
-    public int getId() { return id; }
-    public void setId(int id) { this.id = id; }
+  
+    public int getId() { 
+    	return id;
+    	}
+    public void setId(int id) { 
+    	this.id = id;
+    	}
+    public String getTodoTitle() {
+    	return todoTitle; 
+    	}
 
-    public String getTodoTitle() { return todoTitle; }
-    public void setTodoTitle(String todoTitle) { this.todoTitle = todoTitle; }
+    public void setTodoTitle(String todoTitle) { 
+    	this.todoTitle = todoTitle; 
+    	}
 
-    public String getTodoDesc() { return todoDesc; }
-    public void setTodoDesc(String todoDesc) { this.todoDesc = todoDesc; }
+    public String getTodoDesc() { 
+    	return todoDesc; 
+    	}
+    public void setTodoDesc(String todoDesc) { 
+    	this.todoDesc = todoDesc; 
+    	}
 
-    public String getTodoDateTime() { return todoDateTime; }
-    public void setTodoDateTime(String todoDateTime) { this.todoDateTime = todoDateTime; }
+    public String getTodoDateTime() {
+    	return todoDateTime; 
+    	}
+    public void setTodoDateTime(String todoDateTime) {
+    	this.todoDateTime = todoDateTime; 
+    	}
 
-    public String getTodoStatus() { return todoStatus; }
-    public void setTodoStatus(String todoStatus) { this.todoStatus = todoStatus; }
+    public String getTodoStatus() {
+    	return todoStatus; 
+    	}
+    public void setTodoStatus(String todoStatus) {
+    	this.todoStatus = todoStatus; 
+    	}
 }
