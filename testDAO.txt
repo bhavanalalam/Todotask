@@ -1,0 +1,43 @@
+package com.example.dao;
+import com.example.dao.TodoDAO; 
+import com.example.dao.Todo;
+import java.util.List;
+
+public class TestTodoDAO {
+    public static void main(String[] args) {
+       
+        TodoDAO dao = new TodoDAO();
+
+        Todo todo1 = new Todo("Learn JDBC", "Practice database connectivity in Java",
+                "2025-09-05 10:30:00", "PENDING");
+        dao.insertTodo(todo1);
+        System.out.println("Inserted Todo: " + todo1.getTodoTitle());
+
+        List<Todo> todos = dao.selectAllTodos();
+        System.out.println("\nAll Todos:");
+        for (Todo t : todos) {
+            System.out.println(t.getId() + " | " + t.getTodoTitle() + " | " + t.getTodoStatus());
+        }
+
+        if (!todos.isEmpty()) {
+            int idToFind = todos.get(0).getId();
+            Todo singleTodo = dao.selectTodo(idToFind);
+            System.out.println("\nFetched Todo with ID " + idToFind + ": "
+                    + singleTodo.getTodoTitle() + " | " + singleTodo.getTodoStatus());
+        }
+
+        if (!todos.isEmpty()) {
+            Todo toUpdate = todos.get(0); 
+            toUpdate.setTodoStatus("IN-PROGRESS");
+            toUpdate.setTodoDesc("Started learning JDBC basics");
+            boolean updated = dao.updateTodo(toUpdate);
+            System.out.println("\nUpdated Todo ID " + toUpdate.getId() + ": " + updated);
+        }
+
+        if (todos.size() > 1) {
+            int idToDelete = todos.get(1).getId();
+            boolean deleted = dao.deleteTodo(idToDelete);
+            System.out.println("\nDeleted Todo ID " + idToDelete + ": " + deleted);
+        }
+    }
+}
