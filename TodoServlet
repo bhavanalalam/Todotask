@@ -166,12 +166,7 @@ protected void doGet(HttpServletRequest request, HttpServletResponse response) t
         response.sendRedirect("Login.jsp");
     }
 }
-
-	
-	
-
-	
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+  protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	System.out.println("Todo Servlet dopost");
 	request.getParameterNames();
 	request.getParameter("ListDate");
