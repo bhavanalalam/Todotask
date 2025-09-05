@@ -1,5 +1,5 @@
 package com.example.dao;
-
+import com.example.model.Todo;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,9 +9,9 @@ public class TodoDAO {
     private String jdbcURL = "jdbc:mysql://localhost:3306/todo_tasks";
     private String jdbcUsername = "root";   
     private String jdbcPassword = "root"; 
-    // SQL queries
+ 
     private static final String INSERT_TODO_SQL =
-            "INSERT INTO todo_items (todo_title, todo_desc, todo_datetime, todo_status) VALUES (?, ?, ?, ?)";
+            "INSERT INTO todo_items (todo_title, todo_desc, todo_datetime,todo_targetdate, todo_status) VALUES (?,?, ?, ?, ?)";
     
     private static final String SELECT_TODO_BY_ID =
             "SELECT id, todo_title, todo_desc, todo_datetime, todo_status FROM todo_items WHERE id = ?";
@@ -44,11 +44,12 @@ public class TodoDAO {
 
             ps.setString(1, todo.getTodoTitle());
             ps.setString(2, todo.getTodoDesc());
-            ps.setString(3, todo.getTodoDateTime());
-            ps.setString(4, todo.getTodoStatus()); // ENUM value: PENDING / IN-PROGRESS / COMPLETED
+            ps.setString(3, todo.getTodoDateTime() 
+            		);
+            ps.setString(4, todo.getTodoStatus());
 
             ps.executeUpdate();
-            System.out.println("✅ Todo inserted successfully!");
+            System.out.println("Todo inserted successfully!");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -108,18 +109,21 @@ public class TodoDAO {
             ps.setString(1, todo.getTodoTitle());
             ps.setString(2, todo.getTodoDesc());
             ps.setString(3, todo.getTodoDateTime());
-            ps.setString(4, todo.getTodoStatus()); // ENUM string
+            ps.setString(4, todo.getTodoStatus());
             ps.setInt(5, todo.getId());
 
             rowUpdated = ps.executeUpdate() > 0;
             if (rowUpdated) {
-                System.out.println("✅ Todo updated successfully!");
+                System.out.println(" Todo updated successfully!");
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return rowUpdated;
     }
+    
+    
+    
     
     public boolean deleteTodo(int id) {
         boolean rowDeleted = false;
@@ -129,7 +133,7 @@ public class TodoDAO {
             ps.setInt(1, id);
             rowDeleted = ps.executeUpdate() > 0;
             if (rowDeleted) {
-                System.out.println("✅ Todo deleted successfully!");
+                System.out.println(" Todo deleted successfully!");
             }
         } catch (Exception e) {
             e.printStackTrace();
