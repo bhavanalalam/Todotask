@@ -1,28 +1,12 @@
-package com.example.dao;
+package com.example.model;
 
 public class Todo {
     private int id;
     private String todoTitle;
     private String todoDesc;
     private String todoDateTime;
+    private String todotargetdate;
     private String todoStatus;  
-
-    public Todo() {}
-
-    public Todo(int id, String todoTitle, String todoDesc, String todoDateTime, String todoStatus) {
-        this.id = id;
-        this.todoTitle = todoTitle;
-        this.todoDesc = todoDesc;
-        this.todoDateTime = todoDateTime;
-        this.todoStatus = todoStatus;
-    }
-
-    public Todo(String todoTitle, String todoDesc, String todoDateTime, String todoStatus) {
-        this.todoTitle = todoTitle;
-        this.todoDesc = todoDesc;
-        this.todoDateTime = todoDateTime;
-        this.todoStatus = todoStatus;
-    }
 
   
     public int getId() { 
@@ -47,7 +31,7 @@ public class Todo {
     	}
 
     public String getTodoDateTime() {
-    	return todoDateTime; 
+    	return todoDateTime;  
     	}
     public void setTodoDateTime(String todoDateTime) {
     	this.todoDateTime = todoDateTime; 
@@ -59,4 +43,11 @@ public class Todo {
     public void setTodoStatus(String todoStatus) {
     	this.todoStatus = todoStatus; 
     	}
+	public String getTodotargetdate() {
+		return todotargetdate;
+	}
+	public void setTodotargetdate(String todotargetdate) {
+		this.todotargetdate = todotargetdate;
+	}
 }
+
